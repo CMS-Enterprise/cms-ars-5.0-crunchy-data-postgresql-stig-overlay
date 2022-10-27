@@ -11,3 +11,103 @@ inspec_version: ">= 4.0"
 depends:
   - name: crunchy-data-postgresql-stig-baseline
     url: https://github.com/mitre/crunchy-data-postgresql-stig-baseline/archive/main.tar.gz
+
+inputs:
+  - name: system_categorization
+    desc: "Selected system baseline based on the environment variable"
+    type: String
+    value: <%= ENV['BASELINE'].nil? ? 'Moderate (Default)' : ENV['BASELINE'] %>
+
+  - name: org_name
+    desc: "Name of the organization running this profile"
+    type: Hash
+    value:
+      acronym: "CMS"
+      full_form: "Centers for Medicare & Medicaid Services"
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: overlay_controls
+    desc: 'List of inapplicable controls/requirements in ARS 5.0 based on the system categorization'
+    type: Array
+    <% if ENV['BASELINE'] == 'High-HVA' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+    <% elsif ENV['BASELINE'] == 'High' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+    <% elsif ENV['BASELINE'] == 'Moderate-HVA' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+      - "V-233522" # AC-10
+      - "V-233599" # AU-05(01)
+      - "V-233535" # AU-05(02)
+      - "V-233600" # AU-12(03)
+      - "V-233547" # CM-05(01)
+      - "V-233597" # CM-05(01)
+    <% elsif ENV['BASELINE'] == 'Moderate' || ENV['BASELINE'].nil? %> # Default
+    value:
+      - "V-233543" # Not in ARS 5.0
+      - "V-233522" # AC-10
+      - "V-233599" # AU-05(01)
+      - "V-233535" # AU-05(02)
+      - "V-233598" # AU-10
+      - "V-233600" # AU-12(03)
+      - "V-233547" # CM-05(01)
+      - "V-233597" # CM-05(01)
+      - "V-233546" # SC-03
+    <% elsif ENV['BASELINE'] == 'Low-HVA' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+      - "V-233515" # AC-02(01)
+      - "V-233614" # AC-06(10)
+      - "V-233522" # AC-10
+      - "V-233530" # AC-12
+      - "V-233542" # AU-03(01)
+      - "V-233599" # AU-05(01)
+      - "V-233535" # AU-05(02)
+      - "V-233600" # AU-12(03)
+      - "V-233547" # CM-05(01)
+      - "V-233597" # CM-05(01)
+      - "V-233577" # IA-05(02)
+      - "V-233602" # IA-05(02)
+      - "V-233615" # IA-05(02)
+      - "V-233588" # SC-02
+      - "V-233616" # SC-04
+      - "V-233617" # SC-04
+      - "V-233526" # SI-10
+      - "V-233527" # SI-10
+      - "V-233528" # SI-10
+      - "V-233516" # SI-11
+      - "V-233533" # SI-11
+    <% elsif ENV['BASELINE'] == 'Low' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+      - "V-233515" # AC-02(01)
+      - "V-233614" # AC-06(10)
+      - "V-233522" # AC-10
+      - "V-233530" # AC-12
+      - "V-233542" # AU-03(01)
+      - "V-233599" # AU-05(01)
+      - "V-233535" # AU-05(02)
+      - "V-233598" # AU-10
+      - "V-233600" # AU-12(03)
+      - "V-233547" # CM-05(01)
+      - "V-233597" # CM-05(01)
+      - "V-233548" # CM-07(01)
+      - "V-233577" # IA-05(02)
+      - "V-233602" # IA-05(02)
+      - "V-233615" # IA-05(02)
+      - "V-233588" # SC-02
+      - "V-233546" # SC-03
+      - "V-233616" # SC-04
+      - "V-233617" # SC-04
+      - "V-233586" # SC-28
+      - "V-233590" # SC-28(01)
+      - "V-233605" # SC-28(01)
+      - "V-233526" # SI-10
+      - "V-233527" # SI-10
+      - "V-233528" # SI-10
+      - "V-233516" # SI-11
+      - "V-233533" # SI-11
+     
+    <% end %>
