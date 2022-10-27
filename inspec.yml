@@ -32,8 +32,6 @@ inputs:
     profile: crunchy-data-postgresql-stig-baseline
     <% if ['High-HVA', 'High'].include? ENV['BASELINE'] %>
     value: 1
-    <% elsif ENV['BASELINE'].nil? %>
-    value: 100 # baseline?
     <% end %>
 
   - name: overlay_controls
