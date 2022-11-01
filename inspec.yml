@@ -29,10 +29,58 @@ inputs:
   - name: pg_max_connections # V-233522
     desc: "The maximum allowed number of connections to the postgres instance at any one time."
     type: numeric
-    profile: crunchy-data-postgresql-stig-baseline
     <% if ['High-HVA', 'High'].include? ENV['BASELINE'] %>
     value: 1
     <% end %>
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_owner
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_group # V-233523, V-233607, V-233609, V-233617
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_owner_password # input defined for potential future InSpec code improvements
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_dba
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_dba_password
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_user # V-233516, V-233609, V-233612
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_user_password # input defined for potential future InSpec code improvements
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_host
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_port
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: login_user # V-233592, V-233593, V-233594
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: login_host # input defined for potential future InSpec code improvements
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_syslog_owner # input defined for potential future InSpec code improvements
+    sensitive: true
+    profile: crunchy-data-postgresql-stig-baseline
 
   - name: overlay_controls
     desc: 'List of inapplicable controls/requirements in ARS 5.0 based on the system categorization'
