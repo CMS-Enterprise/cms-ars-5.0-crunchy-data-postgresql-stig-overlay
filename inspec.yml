@@ -71,7 +71,6 @@ inputs:
     type: numeric
     value: 5432
     sensitive: true
-    profile: crunchy-data-postgresql-stig-baseline
 
   - name: login_user # V-233592, V-233593, V-233594
     sensitive: true
