@@ -35,39 +35,75 @@ inputs:
     profile: crunchy-data-postgresql-stig-baseline
 
   - name: pg_owner
+    desc: "The system user of the postgres process"
+    type: string
+    value: "postgres"
     sensitive: true
 
   - name: pg_group # V-233523, V-233607, V-233609, V-233617
+    desc: "The system group of the progress process"
+    type: string
+    value: "postgres"
     sensitive: true
 
   - name: pg_owner_password # input defined for potential future InSpec code improvements
+    desc: "The postgres database owner password"
+    type: string
+    value: ""
     sensitive: true
 
   - name: pg_dba
+    desc: "The postgres DBA user to access the test database"
+    type: string
+    value: ""
     sensitive: true
 
   - name: pg_dba_password
+    desc: "The password for the postgres DBA user"
+    type: string
+    value: ""
     sensitive: true
 
   - name: pg_user # V-233516, V-233609, V-233612
+    desc: "The postgres database system user"
+    type: string
+    value: ""
     sensitive: true
 
   - name: pg_user_password # input defined for potential future InSpec code improvements
+    desc: "The postgres database system user password"
+    type: string
+    value: ""
     sensitive: true
 
   - name: pg_host
+    desc: "The hostname or IP address used to connect to the database"
+    type: string
+    value: "localhost"
     sensitive: true
 
   - name: pg_port
+    desc: "The port used to connect to the database"
+    type: numeric
+    value: 5432
     sensitive: true
 
   - name: login_user # V-233592, V-233593, V-233594
+    desc: "The host login account that can login to the postgres host"
+    type: string
+    value: "postgres"
     sensitive: true
 
   - name: login_host # input defined for potential future InSpec code improvements
+    desc: "The host ip address that can access the postgres host"
+    type: string
+    value: "localhost"
     sensitive: true
 
   - name: pg_syslog_owner # input defined for potential future InSpec code improvements
+    desc: "The syslog process owner that the progress logs should use"
+    type: string
+    value: "postgres" 
     sensitive: true
 
   - name: overlay_controls
