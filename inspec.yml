@@ -1,8 +1,8 @@
 name: cms-ars-5.0-crunchy-data-postgresql-stig-overlay
 title: cms-ars-5.0-crunchy-data-postgresql-stig-overlay
-maintainer: MITRE SAF Team
-copyright: MITRE, 2022
-copyright_email: saf@groups.mitre.org
+maintainer: CMS SAF Team
+copyright: .
+copyright_email: saf@cms.hhs.gov
 license: Apache-2.0
 summary: "CMS ARS 5.0 Overlay InSpec Validation Profile for Crunchy Data PostgreSQL Security Technical Implementation Guide Version 1, Release: 1 Benchmark Date: 20 Nov 2020"
 version: 1.1.0
@@ -10,7 +10,7 @@ inspec_version: ">= 4.0"
 
 depends:
   - name: crunchy-data-postgresql-stig-baseline
-    url: https://github.com/mitre/crunchy-data-postgresql-stig-baseline/archive/input-use-updates.tar.gz
+    url: https://github.com/mitre/crunchy-data-postgresql-stig-baseline/archive/main.tar.gz
 
 inputs:
   - name: system_categorization
