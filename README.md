@@ -176,9 +176,6 @@ pg_users: []
 # Description: 'V-233520, V-233612 use this list of Postgres replicas from pg_hba.conf settings (e.g. ['127.0.0.1/32']).'
 pg_replicas: []
 
-# Description: 'Postgres max number of connections allowed (e.g., 100).'
-pg_max_connections: 100
-
 # Description: 'Postgres timezone (e.g., 'UTC').'
 pg_timezone: 'UTC'
 
