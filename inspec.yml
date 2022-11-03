@@ -1,0 +1,194 @@
+name: cms-ars-5.0-crunchy-data-postgresql-stig-overlay
+title: cms-ars-5.0-crunchy-data-postgresql-stig-overlay
+maintainer: CMS SAF Team
+copyright: 
+copyright_email: saf@cms.hhs.gov
+license: Apache-2.0
+summary: "CMS ARS 5.0 Overlay InSpec Validation Profile for Crunchy Data PostgreSQL Security Technical Implementation Guide Version 1, Release: 1 Benchmark Date: 20 Nov 2020"
+version: 1.1.0
+inspec_version: ">= 4.0"
+
+depends:
+  - name: crunchy-data-postgresql-stig-baseline
+    url: https://github.com/mitre/crunchy-data-postgresql-stig-baseline/archive/main.tar.gz
+
+inputs:
+  - name: system_categorization
+    desc: "Selected system baseline based on the environment variable"
+    type: String
+    value: <%= ENV['BASELINE'].nil? ? 'Moderate (Default)' : ENV['BASELINE'] %>
+
+  - name: org_name
+    desc: "Name of the organization running this profile"
+    type: Hash
+    value:
+      acronym: "CMS"
+      full_form: "Centers for Medicare & Medicaid Services"
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_max_connections # V-233522
+    desc: "The maximum allowed number of connections to the postgres instance at any one time."
+    type: numeric
+    <% if ['High-HVA', 'High'].include? ENV['BASELINE'] %>
+    value: 1
+    <% end %>
+    profile: crunchy-data-postgresql-stig-baseline
+
+  - name: pg_owner
+    desc: "The system user of the postgres process"
+    type: string
+    value: "postgres"
+    sensitive: true
+
+  - name: pg_group # V-233523, V-233607, V-233609, V-233617
+    desc: "The system group of the progress process"
+    type: string
+    value: "postgres"
+    sensitive: true
+
+  - name: pg_owner_password # input defined for potential future InSpec code improvements
+    desc: "The postgres database owner password"
+    type: string
+    value: ""
+    sensitive: true
+
+  - name: pg_dba
+    desc: "The postgres DBA user to access the test database"
+    type: string
+    value: ""
+    sensitive: true
+
+  - name: pg_dba_password
+    desc: "The password for the postgres DBA user"
+    type: string
+    value: ""
+    sensitive: true
+
+  - name: pg_user # V-233516, V-233609, V-233612
+    desc: "The postgres database system user"
+    type: string
+    value: ""
+    sensitive: true
+
+  - name: pg_user_password # input defined for potential future InSpec code improvements
+    desc: "The postgres database system user password"
+    type: string
+    value: ""
+    sensitive: true
+
+  - name: pg_host
+    desc: "The hostname or IP address used to connect to the database"
+    type: string
+    value: "localhost"
+    sensitive: true
+
+  - name: pg_port
+    desc: "The port used to connect to the database"
+    type: numeric
+    value: 5432
+    sensitive: true
+
+  - name: login_user # V-233592, V-233593, V-233594
+    desc: "The host login account that can login to the postgres host"
+    type: string
+    value: "postgres"
+    sensitive: true
+
+  - name: login_host # input defined for potential future InSpec code improvements
+    desc: "The host ip address that can access the postgres host"
+    type: string
+    value: "localhost"
+    sensitive: true
+
+  - name: pg_syslog_owner # input defined for potential future InSpec code improvements
+    desc: "The syslog process owner that the progress logs should use"
+    type: string
+    value: "postgres" 
+    sensitive: true
+
+  - name: overlay_controls
+    desc: 'List of inapplicable controls/requirements in ARS 5.0 based on the system categorization'
+    type: Array
+    <% if ENV['BASELINE'] == 'High-HVA' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+    <% elsif ENV['BASELINE'] == 'High' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+    <% elsif ENV['BASELINE'] == 'Moderate-HVA' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+      - "V-233522" # AC-10
+      - "V-233599" # AU-05(01)
+      - "V-233535" # AU-05(02)
+      - "V-233600" # AU-12(03)
+      - "V-233547" # CM-05(01)
+      - "V-233597" # CM-05(01)
+    <% elsif ENV['BASELINE'] == 'Moderate' || ENV['BASELINE'].nil? %> # Default
+    value:
+      - "V-233543" # Not in ARS 5.0
+      - "V-233522" # AC-10
+      - "V-233599" # AU-05(01)
+      - "V-233535" # AU-05(02)
+      - "V-233598" # AU-10
+      - "V-233600" # AU-12(03)
+      - "V-233547" # CM-05(01)
+      - "V-233597" # CM-05(01)
+      - "V-233546" # SC-03
+    <% elsif ENV['BASELINE'] == 'Low-HVA' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+      - "V-233515" # AC-02(01)
+      - "V-233614" # AC-06(10)
+      - "V-233522" # AC-10
+      - "V-233613" # AC-12
+      - "V-233542" # AU-03(01)
+      - "V-233599" # AU-05(01)
+      - "V-233535" # AU-05(02)
+      - "V-233600" # AU-12(03)
+      - "V-233547" # CM-05(01)
+      - "V-233597" # CM-05(01)
+      - "V-233577" # IA-05(02)
+      - "V-233602" # IA-05(02)
+      - "V-233615" # IA-05(02)
+      - "V-233545" # PL-09
+      - "V-233588" # SC-02
+      - "V-233616" # SC-04
+      - "V-233617" # SC-04
+      - "V-233526" # SI-10
+      - "V-233527" # SI-10
+      - "V-233528" # SI-10
+      - "V-233516" # SI-11
+      - "V-233533" # SI-11
+    <% elsif ENV['BASELINE'] == 'Low' %>
+    value:
+      - "V-233543" # Not in ARS 5.0
+      - "V-233515" # AC-02(01)
+      - "V-233614" # AC-06(10)
+      - "V-233522" # AC-10
+      - "V-233613" # AC-12
+      - "V-233542" # AU-03(01)
+      - "V-233599" # AU-05(01)
+      - "V-233535" # AU-05(02)
+      - "V-233598" # AU-10
+      - "V-233600" # AU-12(03)
+      - "V-233547" # CM-05(01)
+      - "V-233597" # CM-05(01)
+      - "V-233548" # CM-07(01)
+      - "V-233577" # IA-05(02)
+      - "V-233602" # IA-05(02)
+      - "V-233615" # IA-05(02)
+      - "V-233545" # PL-09
+      - "V-233588" # SC-02
+      - "V-233546" # SC-03
+      - "V-233616" # SC-04
+      - "V-233617" # SC-04
+      - "V-233586" # SC-28
+      - "V-233590" # SC-28(01)
+      - "V-233605" # SC-28(01)
+      - "V-233526" # SI-10
+      - "V-233527" # SI-10
+      - "V-233528" # SI-10
+      - "V-233516" # SI-11
+      - "V-233533" # SI-11
+    <% end %>
