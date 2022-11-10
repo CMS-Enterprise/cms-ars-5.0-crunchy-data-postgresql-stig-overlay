@@ -106,6 +106,20 @@ inputs:
     value: "postgres" 
     sensitive: true
 
+  - name: pg_superusers   # V-233520, V-233523, # V-233524, V-233530, V-233534, V-233539, V-233588, V-233593, # V-233597, V-233607
+    desc: "Authorized superuser accounts"
+    type: array
+    value:
+      - "postgres"
+    sensitive: true
+
+  - name: pg_users # V-233612
+    desc: "authorized postgres user accounts"
+    type: array
+    value:
+      - ""
+    sensitive: true
+
   - name: overlay_controls
     desc: 'List of inapplicable controls/requirements in ARS 5.0 based on the system categorization'
     type: Array
