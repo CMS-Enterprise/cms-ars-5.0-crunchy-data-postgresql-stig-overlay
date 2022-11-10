@@ -47,16 +47,16 @@ $env:BASELINE="High"
 
 The following inputs must be configured in an inputs ".yml" file for the profile to run correctly for your specific environment. More information about InSpec inputs can be found in the [InSpec Profile Documentation](https://www.inspec.io/docs/reference/profiles/).
 
-#### *Note* Windows and Linux InSpec Runner
+#### *Note* Windows and Linux Cinc-auditor Runner
 
-There are current issues with how the profiles run when using a windows or linux runner. We have accounted for this in the profile with the `windows_runner` input - which we *default* to `false` assuming a Linux based InSpec runner.
+There are current issues with how the profiles run when using a windows or linux runner. We have accounted for this in the profile with the `windows_runner` input - which we *default* to `false` assuming a Linux based Cinc-auditor runner.
 
-If you are using a *Windows* based inspec installation, please set the `windows_runner` input to `true` either via your `inspec.yml` file or via the cli flag via, `--input windows_runner=true`
+If you are using a *Windows* based cinc-auditor installation, please set the `windows_runner` input to `true` either via your `inspec.yml` file or via the cli flag via, `--input windows_runner=true`
 
 ### Example Inputs You Can Use
 
 ```
-# Changes checks depending on if using a Windows or Linux-based InSpec Runner (default value = false)
+# Changes checks depending on if using a Windows or Linux-based cinc-auditor Runner (default value = false)
 windows_runner: false
 
 
@@ -192,25 +192,25 @@ approved_ext: []
 
 ## Running This Overlay Directly from Github
 
-Against a remote target using ssh as the *postgres* user (i.e., InSpec installed on a separate runner host)
+Against a remote target using ssh as the *postgres* user (i.e., cinc-auditor installed on a separate runner host)
 ```bash
-inspec exec https://github.com/cms-enterprise/cms-ars-5.0-crunchy-data-postgresql-stig-overlay/archive/main.tar.gz -t ssh://postgres:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json> 
+cinc-auditor exec https://github.com/cms-enterprise/cms-ars-5.0-crunchy-data-postgresql-stig-overlay/archive/main.tar.gz -t ssh://postgres:TARGET_PASSWORD@TARGET_IP:TARGET_PORT --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json> 
 ```
 
-Against a remote target using a pem key as the *postgres* user (i.e., InSpec installed on a separate runner host)
+Against a remote target using a pem key as the *postgres* user (i.e., cinc-auditor installed on a separate runner host)
 ```bash
-inspec exec https://github.com/cms-enterprise/cms-ars-5.0-crunchy-data-postgresql-stig-overlay/archive/main.tar.gz -t ssh://postgres@TARGET_IP:TARGET_PORT -i <postgres_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>  
+cinc-auditor exec https://github.com/cms-enterprise/cms-ars-5.0-crunchy-data-postgresql-stig-overlay/archive/main.tar.gz -t ssh://postgres@TARGET_IP:TARGET_PORT -i <postgres_PEM_KEY> --input-file <path_to_your_input_file/name_of_your_input_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>  
 ```
 
-Against a _**locally-hosted**_ instance logged in as the *postgres* user (i.e., InSpec installed on the target hosting the postgresql database)
+Against a _**locally-hosted**_ instance logged in as the *postgres* user (i.e., cinc-auditor installed on the target hosting the postgresql database)
 
 ```bash
-inspec exec https://github.com/cms-enterprise/cms-ars-5.0-crunchy-data-postgresql-stig-overlay/archive/main.tar.gz --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+cinc-auditor exec https://github.com/cms-enterprise/cms-ars-5.0-crunchy-data-postgresql-stig-overlay/archive/main.tar.gz --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
-Against a _**docker-containerized**_ instance (i.e., InSpec installed on the node hosting the postgresql container):
+Against a _**docker-containerized**_ instance (i.e., cinc-auditor installed on the node hosting the postgresql container):
 ```
-inspec exec https://github.com/cms-enterprise/cms-ars-5.0-crunchy-data-postgresql-stig-overlay/archive/main.tar.gz -t docker://<instance_id> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+cinc-auditor exec https://github.com/cms-enterprise/cms-ars-5.0-crunchy-data-postgresql-stig-overlay/archive/main.tar.gz -t docker://<instance_id> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
 ### Different Run Options
@@ -229,8 +229,8 @@ When the __"runner"__ host uses this profile overlay for the first time, follow 
 mkdir profiles
 cd profiles
 git clone https://github.com/cms-enterprise/cms-ars-5.0-crunchy-data-postgresql-stig-overlay.git
-inspec archive cms-ars-5.0-crunchy-data-postgresql-stig-overlay
-inspec exec <name of generated archive> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+cinc-auditor archive cms-ars-5.0-crunchy-data-postgresql-stig-overlay
+cinc-auditor exec <name of generated archive> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
 For every successive run, follow these steps to always have the latest version of this overlay and dependent profiles:
@@ -239,13 +239,13 @@ For every successive run, follow these steps to always have the latest version o
 cd cms-ars-5.0-crunchy-data-postgresql-stig-overlay
 git pull
 cd ..
-inspec archive cms-ars-5.0-crunchy-data-postgresql-stig-overlay --overwrite
-inspec exec <name of generated archive> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
+cinc-auditor archive cms-ars-5.0-crunchy-data-postgresql-stig-overlay --overwrite
+cinc-auditor exec <name of generated archive> --input-file=<path_to_your_inputs_file/name_of_your_inputs_file.yml> --reporter=cli json:<path_to_your_output_file/name_of_your_output_file.json>
 ```
 
 ## Using Heimdall for Viewing the JSON Results
 
-The JSON results output file can be loaded into __[heimdall-lite](https://heimdall-lite.mitre.org/)__ for a user-interactive, graphical view of the InSpec results. 
+The JSON results output file can be loaded into __[heimdall-lite](https://heimdall-lite.cms.gov/)__ for a user-interactive, graphical view of the InSpec results. 
 
 The JSON InSpec results file may also be loaded into a __[full heimdall server](https://github.com/mitre/heimdall2)__, allowing for additional functionality such as to store and compare multiple profile runs.
 
